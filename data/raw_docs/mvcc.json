@@ -1,0 +1,10 @@
+{
+  "doc_name": "mvcc",
+  "url": "https://www.postgresql.org/docs/16/mvcc.html",
+  "sections": [
+    {
+      "title": "Chapter 13. Concurrency Control",
+      "text": "Table of Contents\nThis chapter describes the behavior of thePostgreSQLdatabase system when two or more sessions try to access the same data at the same time. The goals in that situation are to allow efficient access for all sessions while maintaining strict data integrity. Every developer of database applications should be familiar with the topics covered in this chapter.\n"
+    }
+  ]
+}

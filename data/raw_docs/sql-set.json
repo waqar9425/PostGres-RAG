@@ -1,0 +1,38 @@
+{
+  "doc_name": "sql-set",
+  "url": "https://www.postgresql.org/docs/16/sql-set.html",
+  "sections": [
+    {
+      "title": "SET",
+      "text": "SET — change a run-time parameter\n"
+    },
+    {
+      "title": "Synopsis",
+      "text": "\n\nCODE:\n\nSET [ SESSION | LOCAL ] configuration_parameter { TO | = } { value | 'value' | DEFAULT }\nSET [ SESSION | LOCAL ] TIME ZONE { value | 'value' | LOCAL | DEFAULT }\n\n"
+    },
+    {
+      "title": "Description",
+      "text": "TheSETcommand changes run-time configuration parameters. Many of the run-time parameters listed inChapter 20can be changed on-the-fly withSET. (Some parameters can only be changed by superusers and users who have been grantedSETprivilege on that parameter. There are also parameters that cannot be changed after server or session start.)SETonly affects the value used by the current session.\nIfSET(or equivalentlySET SESSION) is issued within a transaction that is later aborted, the effects of theSETcommand disappear when the transaction is rolled back. Once the surrounding transaction is committed, the effects will persist until the end of the session, unless overridden by anotherSET.\nThe effects ofSET LOCALlast only till the end of the current transaction, whether committed or not. A special case isSETfollowed bySET LOCALwithin a single transaction: theSET LOCALvalue will be seen until the end of the transaction, but afterwards (if the transaction is committed) theSETvalue will take effect.\nThe effects ofSETorSET LOCALare also canceled by rolling back to a savepoint that is earlier than the command.\nIfSET LOCALis used within a function that has aSEToption for the same variable (seeCREATE FUNCTION), the effects of theSET LOCALcommand disappear at function exit; that is, the value in effect when the function was called is restored anyway. This allowsSET LOCALto be used for dynamic or repeated changes of a parameter within a function, while still having the convenience of using theSEToption to save and restore the caller's value. However, a regularSETcommand overrides any surrounding function'sSEToption; its effects will persist unless rolled back.\n"
+    },
+    {
+      "title": "Note",
+      "text": "InPostgreSQLversions 8.0 through 8.2, the effects of aSET LOCALwould be canceled by releasing an earlier savepoint, or by successful exit from aPL/pgSQLexception block. This behavior has been changed because it was deemed unintuitive.\n"
+    },
+    {
+      "title": "Parameters",
+      "text": "Specifies that the command takes effect for the current session. (This is the default if neitherSESSIONnorLOCALappears.)\nSpecifies that the command takes effect for only the current transaction. AfterCOMMITorROLLBACK, the session-level setting takes effect again. Issuing this outside of a transaction block emits a warning and otherwise has no effect.\nName of a settable run-time parameter. Available parameters are documented inChapter 20and below.\nNew value of parameter. Values can be specified as string constants, identifiers, numbers, or comma-separated lists of these, as appropriate for the particular parameter.DEFAULTcan be written to specify resetting the parameter to its default value (that is, whatever value it would have had if noSEThad been executed in the current session).\nBesides the configuration parameters documented inChapter 20, there are a few that can only be adjusted using theSETcommand or that have a special syntax:\nSET SCHEMA 'value'is an alias forSET search_path TOvalue. Only one schema can be specified using this syntax.\nSET NAMESvalueis an alias forSET client_encoding TOvalue.\nSets the internal seed for the random number generator (the functionrandom). Allowed values are floating-point numbers between -1 and 1 inclusive.\nThe seed can also be set by invoking the functionsetseed:\n\n\nCODE:\n\nSELECT setseed(value);\n\nSET TIME ZONE 'value'is an alias forSET timezone TO 'value'. The syntaxSET TIME ZONEallows special syntax for the time zone specification. Here are examples of valid values:\nThe time zone for Berkeley, California.\nThe time zone for Italy.\nThe time zone 7 hours west from UTC (equivalent to PDT). Positive values are east from UTC.\nThe time zone 8 hours west from UTC (equivalent to PST).\nSet the time zone to your local time zone (that is, the server's default value oftimezone).\nTimezone settings given as numbers or intervals are internally translated to POSIX timezone syntax. For example, afterSET TIME ZONE -7,SHOW TIME ZONEwould report<-07>+07.\nTime zone abbreviations are not supported bySET; seeSection 8.5.3for more information about time zones.\n"
+    },
+    {
+      "title": "Notes",
+      "text": "The functionset_configprovides equivalent functionality; seeSection 9.27.1. Also, it is possible to UPDATE thepg_settingssystem view to perform the equivalent ofSET.\n"
+    },
+    {
+      "title": "Examples",
+      "text": "Set the schema search path:\n\n\nCODE:\n\nSET search_path TO my_schema, public;\n\nSet the style of date to traditionalPOSTGRESwith“day before month”input convention:\n\n\nCODE:\n\nSET datestyle TO postgres, dmy;\n\nSet the time zone for Berkeley, California:\n\n\nCODE:\n\nSET TIME ZONE 'America/Los_Angeles';\n\nSet the time zone for Italy:\n\n\nCODE:\n\nSET TIME ZONE 'Europe/Rome';\n\n"
+    },
+    {
+      "title": "Compatibility",
+      "text": "SET TIME ZONEextends syntax defined in the SQL standard. The standard allows only numeric time zone offsets whilePostgreSQLallows more flexible time-zone specifications. All otherSETfeatures arePostgreSQLextensions.\n"
+    }
+  ]
+}

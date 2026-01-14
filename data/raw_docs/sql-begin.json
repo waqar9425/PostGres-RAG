@@ -1,0 +1,34 @@
+{
+  "doc_name": "sql-begin",
+  "url": "https://www.postgresql.org/docs/16/sql-begin.html",
+  "sections": [
+    {
+      "title": "BEGIN",
+      "text": "BEGIN — start a transaction block\n"
+    },
+    {
+      "title": "Synopsis",
+      "text": "\n\nCODE:\n\nBEGIN [ WORK | TRANSACTION ] [ transaction_mode [, ...] ]\n\nwhere transaction_mode is one of:\n\n    ISOLATION LEVEL { SERIALIZABLE | REPEATABLE READ | READ COMMITTED | READ UNCOMMITTED }\n    READ WRITE | READ ONLY\n    [ NOT ] DEFERRABLE\n\n"
+    },
+    {
+      "title": "Description",
+      "text": "BEGINinitiates a transaction block, that is, all statements after aBEGINcommand will be executed in a single transaction until an explicitCOMMITorROLLBACKis given. By default (withoutBEGIN),PostgreSQLexecutes transactions in“autocommit”mode, that is, each statement is executed in its own transaction and a commit is implicitly performed at the end of the statement (if execution was successful, otherwise a rollback is done).\nStatements are executed more quickly in a transaction block, because transaction start/commit requires significant CPU and disk activity. Execution of multiple statements inside a transaction is also useful to ensure consistency when making several related changes: other sessions will be unable to see the intermediate states wherein not all the related updates have been done.\nIf the isolation level, read/write mode, or deferrable mode is specified, the new transaction has those characteristics, as ifSET TRANSACTIONwas executed.\n"
+    },
+    {
+      "title": "Parameters",
+      "text": "Optional key words. They have no effect.\nRefer toSET TRANSACTIONfor information on the meaning of the other parameters to this statement.\n"
+    },
+    {
+      "title": "Notes",
+      "text": "START TRANSACTIONhas the same functionality asBEGIN.\nUseCOMMITorROLLBACKto terminate a transaction block.\nIssuingBEGINwhen already inside a transaction block will provoke a warning message. The state of the transaction is not affected. To nest transactions within a transaction block, use savepoints (seeSAVEPOINT).\nFor reasons of backwards compatibility, the commas between successivetransaction_modescan be omitted.\n"
+    },
+    {
+      "title": "Examples",
+      "text": "To begin a transaction block:\n\n\nCODE:\n\nBEGIN;\n\n"
+    },
+    {
+      "title": "Compatibility",
+      "text": "BEGINis aPostgreSQLlanguage extension. It is equivalent to the SQL-standard commandSTART TRANSACTION, whose reference page contains additional compatibility information.\nTheDEFERRABLEtransaction_modeis aPostgreSQLlanguage extension.\nIncidentally, theBEGINkey word is used for a different purpose in embedded SQL. You are advised to be careful about the transaction semantics when porting database applications.\n"
+    }
+  ]
+}

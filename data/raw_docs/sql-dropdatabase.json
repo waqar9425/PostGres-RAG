@@ -1,0 +1,30 @@
+{
+  "doc_name": "sql-dropdatabase",
+  "url": "https://www.postgresql.org/docs/16/sql-dropdatabase.html",
+  "sections": [
+    {
+      "title": "DROP DATABASE",
+      "text": "DROP DATABASE — remove a database\n"
+    },
+    {
+      "title": "Synopsis",
+      "text": "\n\nCODE:\n\nDROP DATABASE [ IF EXISTS ] name [ [ WITH ] ( option [, ...] ) ]\n\nwhere option can be:\n\n    FORCE\n\n"
+    },
+    {
+      "title": "Description",
+      "text": "DROP DATABASEdrops a database. It removes the catalog entries for the database and deletes the directory containing the data. It can only be executed by the database owner. It cannot be executed while you are connected to the target database. (Connect topostgresor any other database to issue this command.) Also, if anyone else is connected to the target database, this command will fail unless you use theFORCEoption described below.\nDROP DATABASEcannot be undone. Use it with care!\n"
+    },
+    {
+      "title": "Parameters",
+      "text": "Do not throw an error if the database does not exist. A notice is issued in this case.\nThe name of the database to remove.\nAttempt to terminate all existing connections to the target database. It doesn't terminate if prepared transactions, active logical replication slots or subscriptions are present in the target database.\nThis terminates background worker connections and connections that the current user has permission to terminate withpg_terminate_backend, described inSection 9.27.2. If connections would remain, this command will fail.\n"
+    },
+    {
+      "title": "Notes",
+      "text": "DROP DATABASEcannot be executed inside a transaction block.\nThis command cannot be executed while connected to the target database. Thus, it might be more convenient to use the programdropdbinstead, which is a wrapper around this command.\n"
+    },
+    {
+      "title": "Compatibility",
+      "text": "There is noDROP DATABASEstatement in the SQL standard.\n"
+    }
+  ]
+}

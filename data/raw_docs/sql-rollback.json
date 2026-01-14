@@ -1,0 +1,34 @@
+{
+  "doc_name": "sql-rollback",
+  "url": "https://www.postgresql.org/docs/16/sql-rollback.html",
+  "sections": [
+    {
+      "title": "ROLLBACK",
+      "text": "ROLLBACK — abort the current transaction\n"
+    },
+    {
+      "title": "Synopsis",
+      "text": "\n\nCODE:\n\nROLLBACK [ WORK | TRANSACTION ] [ AND [ NO ] CHAIN ]\n\n"
+    },
+    {
+      "title": "Description",
+      "text": "ROLLBACKrolls back the current transaction and causes all the updates made by the transaction to be discarded.\n"
+    },
+    {
+      "title": "Parameters",
+      "text": "Optional key words. They have no effect.\nIfAND CHAINis specified, a new (not aborted) transaction is immediately started with the same transaction characteristics (seeSET TRANSACTION) as the just finished one. Otherwise, no new transaction is started.\n"
+    },
+    {
+      "title": "Notes",
+      "text": "UseCOMMITto successfully terminate a transaction.\nIssuingROLLBACKoutside of a transaction block emits a warning and otherwise has no effect.ROLLBACK AND CHAINoutside of a transaction block is an error.\n"
+    },
+    {
+      "title": "Examples",
+      "text": "To abort all changes:\n\n\nCODE:\n\nROLLBACK;\n\n"
+    },
+    {
+      "title": "Compatibility",
+      "text": "The commandROLLBACKconforms to the SQL standard. The formROLLBACK TRANSACTIONis a PostgreSQL extension.\n"
+    }
+  ]
+}

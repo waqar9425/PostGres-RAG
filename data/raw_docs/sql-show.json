@@ -1,0 +1,34 @@
+{
+  "doc_name": "sql-show",
+  "url": "https://www.postgresql.org/docs/16/sql-show.html",
+  "sections": [
+    {
+      "title": "SHOW",
+      "text": "SHOW — show the value of a run-time parameter\n"
+    },
+    {
+      "title": "Synopsis",
+      "text": "\n\nCODE:\n\nSHOW name\nSHOW ALL\n\n"
+    },
+    {
+      "title": "Description",
+      "text": "SHOWwill display the current setting of run-time parameters. These variables can be set using theSETstatement, by editing thepostgresql.confconfiguration file, through thePGOPTIONSenvironmental variable (when usinglibpqor alibpq-based application), or through command-line flags when starting thepostgresserver. SeeChapter 20for details.\n"
+    },
+    {
+      "title": "Parameters",
+      "text": "The name of a run-time parameter. Available parameters are documented inChapter 20and on theSETreference page. In addition, there are a few parameters that can be shown but not set:\nShows the server's version number.\nShows the server-side character set encoding. At present, this parameter can be shown but not set, because the encoding is determined at database creation time.\nTrue if the current role has superuser privileges.\nShow the values of all configuration parameters, with descriptions.\n"
+    },
+    {
+      "title": "Notes",
+      "text": "The functioncurrent_settingproduces equivalent output; seeSection 9.27.1. Also, thepg_settingssystem view produces the same information.\n"
+    },
+    {
+      "title": "Examples",
+      "text": "Show the current setting of the parameterDateStyle:\n\n\nCODE:\n\nSHOW DateStyle;\n DateStyle\n-----------\n ISO, MDY\n(1 row)\n\nShow the current setting of the parametergeqo:\n\n\nCODE:\n\nSHOW geqo;\n geqo\n------\n on\n(1 row)\n\nShow all settings:\n\n\nCODE:\n\nSHOW ALL;\n            name         | setting |                description\n-------------------------+---------+-------------------------------------------------\n allow_system_table_mods | off     | Allows modifications of the structure of ...\n    .\n    .\n    .\n xmloption               | content | Sets whether XML data in implicit parsing ...\n zero_damaged_pages      | off     | Continues processing past damaged page headers.\n(196 rows)\n\n"
+    },
+    {
+      "title": "Compatibility",
+      "text": "TheSHOWcommand is aPostgreSQLextension.\n"
+    }
+  ]
+}

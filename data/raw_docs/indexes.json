@@ -1,0 +1,10 @@
+{
+  "doc_name": "indexes",
+  "url": "https://www.postgresql.org/docs/16/indexes.html",
+  "sections": [
+    {
+      "title": "Chapter 11. Indexes",
+      "text": "Table of Contents\nIndexes are a common way to enhance database performance. An index allows the database server to find and retrieve specific rows much faster than it could do without an index. But indexes also add overhead to the database system as a whole, so they should be used sensibly.\n"
+    }
+  ]
+}

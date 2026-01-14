@@ -1,0 +1,42 @@
+{
+  "doc_name": "sql-delete",
+  "url": "https://www.postgresql.org/docs/16/sql-delete.html",
+  "sections": [
+    {
+      "title": "DELETE",
+      "text": "DELETE — delete rows of a table\n"
+    },
+    {
+      "title": "Synopsis",
+      "text": "\n\nCODE:\n\n[ WITH [ RECURSIVE ] with_query [, ...] ]\nDELETE FROM [ ONLY ] table_name [ * ] [ [ AS ] alias ]\n    [ USING from_item [, ...] ]\n    [ WHERE condition | WHERE CURRENT OF cursor_name ]\n    [ RETURNING { * | output_expression [ [ AS ] output_name ] } [, ...] ]\n\n"
+    },
+    {
+      "title": "Description",
+      "text": "DELETEdeletes rows that satisfy theWHEREclause from the specified table. If theWHEREclause is absent, the effect is to delete all rows in the table. The result is a valid, but empty table.\n"
+    },
+    {
+      "title": "Tip",
+      "text": "TRUNCATEprovides a faster mechanism to remove all rows from a table.\nThere are two ways to delete rows in a table using information contained in other tables in the database: using sub-selects, or specifying additional tables in theUSINGclause. Which technique is more appropriate depends on the specific circumstances.\nThe optionalRETURNINGclause causesDELETEto compute and return value(s) based on each row actually deleted. Any expression using the table's columns, and/or columns of other tables mentioned inUSING, can be computed. The syntax of theRETURNINGlist is identical to that of the output list ofSELECT.\nYou must have theDELETEprivilege on the table to delete from it, as well as theSELECTprivilege for any table in theUSINGclause or whose values are read in thecondition.\n"
+    },
+    {
+      "title": "Parameters",
+      "text": "TheWITHclause allows you to specify one or more subqueries that can be referenced by name in theDELETEquery. SeeSection 7.8andSELECTfor details.\nThe name (optionally schema-qualified) of the table to delete rows from. IfONLYis specified before the table name, matching rows are deleted from the named table only. IfONLYis not specified, matching rows are also deleted from any tables inheriting from the named table. Optionally,*can be specified after the table name to explicitly indicate that descendant tables are included.\nA substitute name for the target table. When an alias is provided, it completely hides the actual name of the table. For example, givenDELETE FROM foo AS f, the remainder of theDELETEstatement must refer to this table asfnotfoo.\nA table expression allowing columns from other tables to appear in theWHEREcondition. This uses the same syntax as theFROMclause of aSELECTstatement; for example, an alias for the table name can be specified. Do not repeat the target table as afrom_itemunless you wish to set up a self-join (in which case it must appear with an alias in thefrom_item).\nAn expression that returns a value of typeboolean. Only rows for which this expression returnstruewill be deleted.\nThe name of the cursor to use in aWHERE CURRENT OFcondition. The row to be deleted is the one most recently fetched from this cursor. The cursor must be a non-grouping query on theDELETE's target table. Note thatWHERE CURRENT OFcannot be specified together with a Boolean condition. SeeDECLAREfor more information about using cursors withWHERE CURRENT OF.\nAn expression to be computed and returned by theDELETEcommand after each row is deleted. The expression can use any column names of the table named bytable_nameor table(s) listed inUSING. Write*to return all columns.\nA name to use for a returned column.\n"
+    },
+    {
+      "title": "Outputs",
+      "text": "On successful completion, aDELETEcommand returns a command tag of the form\n\n\nCODE:\n\nDELETE count\n\nThecountis the number of rows deleted. Note that the number may be less than the number of rows that matched theconditionwhen deletes were suppressed by aBEFORE DELETEtrigger. Ifcountis 0, no rows were deleted by the query (this is not considered an error).\nIf theDELETEcommand contains aRETURNINGclause, the result will be similar to that of aSELECTstatement containing the columns and values defined in theRETURNINGlist, computed over the row(s) deleted by the command.\n"
+    },
+    {
+      "title": "Notes",
+      "text": "PostgreSQLlets you reference columns of other tables in theWHEREcondition by specifying the other tables in theUSINGclause. For example, to delete all films produced by a given producer, one can do:\n\n\nCODE:\n\nDELETE FROM films USING producers\n  WHERE producer_id = producers.id AND producers.name = 'foo';\n\nWhat is essentially happening here is a join betweenfilmsandproducers, with all successfully joinedfilmsrows being marked for deletion. This syntax is not standard. A more standard way to do it is:\n\n\nCODE:\n\nDELETE FROM films\n  WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');\n\nIn some cases the join style is easier to write or faster to execute than the sub-select style.\n"
+    },
+    {
+      "title": "Examples",
+      "text": "Delete all films but musicals:\n\n\nCODE:\n\nDELETE FROM films WHERE kind <> 'Musical';\n\nClear the tablefilms:\n\n\nCODE:\n\nDELETE FROM films;\n\nDelete completed tasks, returning full details of the deleted rows:\n\n\nCODE:\n\nDELETE FROM tasks WHERE status = 'DONE' RETURNING *;\n\nDelete the row oftaskson which the cursorc_tasksis currently positioned:\n\n\nCODE:\n\nDELETE FROM tasks WHERE CURRENT OF c_tasks;\n\n"
+    },
+    {
+      "title": "Compatibility",
+      "text": "This command conforms to theSQLstandard, except that theUSINGandRETURNINGclauses arePostgreSQLextensions, as is the ability to useWITHwithDELETE.\n"
+    }
+  ]
+}

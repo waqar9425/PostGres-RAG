@@ -1,0 +1,34 @@
+{
+  "doc_name": "sql-refreshmaterializedview",
+  "url": "https://www.postgresql.org/docs/16/sql-refreshmaterializedview.html",
+  "sections": [
+    {
+      "title": "REFRESH MATERIALIZED VIEW",
+      "text": "REFRESH MATERIALIZED VIEW — replace the contents of a materialized view\n"
+    },
+    {
+      "title": "Synopsis",
+      "text": "\n\nCODE:\n\nREFRESH MATERIALIZED VIEW [ CONCURRENTLY ] name\n    [ WITH [ NO ] DATA ]\n\n"
+    },
+    {
+      "title": "Description",
+      "text": "REFRESH MATERIALIZED VIEWcompletely replaces the contents of a materialized view. To execute this command you must be the owner of the materialized view. The old contents are discarded. IfWITH DATAis specified (or defaults) the backing query is executed to provide the new data, and the materialized view is left in a scannable state. IfWITH NO DATAis specified no new data is generated and the materialized view is left in an unscannable state.\nCONCURRENTLYandWITH NO DATAmay not be specified together.\n"
+    },
+    {
+      "title": "Parameters",
+      "text": "Refresh the materialized view without locking out concurrent selects on the materialized view. Without this option a refresh which affects a lot of rows will tend to use fewer resources and complete more quickly, but could block other connections which are trying to read from the materialized view. This option may be faster in cases where a small number of rows are affected.\nThis option is only allowed if there is at least oneUNIQUEindex on the materialized view which uses only column names and includes all rows; that is, it must not be an expression index or include aWHEREclause.\nThis option may not be used when the materialized view is not already populated.\nEven with this option only oneREFRESHat a time may run against any one materialized view.\nThe name (optionally schema-qualified) of the materialized view to refresh.\n"
+    },
+    {
+      "title": "Notes",
+      "text": "If there is anORDER BYclause in the materialized view's defining query, the original contents of the materialized view will be ordered that way; butREFRESH MATERIALIZED VIEWdoes not guarantee to preserve that ordering.\n"
+    },
+    {
+      "title": "Examples",
+      "text": "This command will replace the contents of the materialized view calledorder_summaryusing the query from the materialized view's definition, and leave it in a scannable state:\n\n\nCODE:\n\nREFRESH MATERIALIZED VIEW order_summary;\n\nThis command will free storage associated with the materialized viewannual_statistics_basisand leave it in an unscannable state:\n\n\nCODE:\n\nREFRESH MATERIALIZED VIEW annual_statistics_basis WITH NO DATA;\n\n"
+    },
+    {
+      "title": "Compatibility",
+      "text": "REFRESH MATERIALIZED VIEWis aPostgreSQLextension.\n"
+    }
+  ]
+}

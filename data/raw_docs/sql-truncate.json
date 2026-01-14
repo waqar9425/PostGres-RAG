@@ -1,0 +1,34 @@
+{
+  "doc_name": "sql-truncate",
+  "url": "https://www.postgresql.org/docs/16/sql-truncate.html",
+  "sections": [
+    {
+      "title": "TRUNCATE",
+      "text": "TRUNCATE — empty a table or set of tables\n"
+    },
+    {
+      "title": "Synopsis",
+      "text": "\n\nCODE:\n\nTRUNCATE [ TABLE ] [ ONLY ] name [ * ] [, ... ]\n    [ RESTART IDENTITY | CONTINUE IDENTITY ] [ CASCADE | RESTRICT ]\n\n"
+    },
+    {
+      "title": "Description",
+      "text": "TRUNCATEquickly removes all rows from a set of tables. It has the same effect as an unqualifiedDELETEon each table, but since it does not actually scan the tables it is faster. Furthermore, it reclaims disk space immediately, rather than requiring a subsequentVACUUMoperation. This is most useful on large tables.\n"
+    },
+    {
+      "title": "Parameters",
+      "text": "The name (optionally schema-qualified) of a table to truncate. IfONLYis specified before the table name, only that table is truncated. IfONLYis not specified, the table and all its descendant tables (if any) are truncated. Optionally,*can be specified after the table name to explicitly indicate that descendant tables are included.\nAutomatically restart sequences owned by columns of the truncated table(s).\nDo not change the values of sequences. This is the default.\nAutomatically truncate all tables that have foreign-key references to any of the named tables, or to any tables added to the group due toCASCADE.\nRefuse to truncate if any of the tables have foreign-key references from tables that are not listed in the command. This is the default.\n"
+    },
+    {
+      "title": "Notes",
+      "text": "You must have theTRUNCATEprivilege on a table to truncate it.\nTRUNCATEacquires anACCESS EXCLUSIVElock on each table it operates on, which blocks all other concurrent operations on the table. WhenRESTART IDENTITYis specified, any sequences that are to be restarted are likewise locked exclusively. If concurrent access to a table is required, then theDELETEcommand should be used instead.\nTRUNCATEcannot be used on a table that has foreign-key references from other tables, unless all such tables are also truncated in the same command. Checking validity in such cases would require table scans, and the whole point is not to do one. TheCASCADEoption can be used to automatically include all dependent tables — but be very careful when using this option, or else you might lose data you did not intend to! Note in particular that when the table to be truncated is a partition, siblings partitions are left untouched, but cascading occurs to all referencing tables and all their partitions with no distinction.\nTRUNCATEwill not fire anyON DELETEtriggers that might exist for the tables. But it will fireON TRUNCATEtriggers. IfON TRUNCATEtriggers are defined for any of the tables, then allBEFORE TRUNCATEtriggers are fired before any truncation happens, and allAFTER TRUNCATEtriggers are fired after the last truncation is performed and any sequences are reset. The triggers will fire in the order that the tables are to be processed (first those listed in the command, and then any that were added due to cascading).\nTRUNCATEis not MVCC-safe. After truncation, the table will appear empty to concurrent transactions, if they are using a snapshot taken before the truncation occurred. SeeSection 13.6for more details.\nTRUNCATEis transaction-safe with respect to the data in the tables: the truncation will be safely rolled back if the surrounding transaction does not commit.\nWhenRESTART IDENTITYis specified, the impliedALTER SEQUENCE RESTARToperations are also done transactionally; that is, they will be rolled back if the surrounding transaction does not commit. Be aware that if any additional sequence operations are done on the restarted sequences before the transaction rolls back, the effects of these operations on the sequences will be rolled back, but not their effects oncurrval(); that is, after the transactioncurrval()will continue to reflect the last sequence value obtained inside the failed transaction, even though the sequence itself may no longer be consistent with that. This is similar to the usual behavior ofcurrval()after a failed transaction.\nTRUNCATEcan be used for foreign tables if supported by the foreign data wrapper, for instance, seepostgres_fdw.\n"
+    },
+    {
+      "title": "Examples",
+      "text": "Truncate the tablesbigtableandfattable:\n\n\nCODE:\n\nTRUNCATE bigtable, fattable;\n\nThe same, and also reset any associated sequence generators:\n\n\nCODE:\n\nTRUNCATE bigtable, fattable RESTART IDENTITY;\n\nTruncate the tableothertable, and cascade to any tables that referenceothertablevia foreign-key constraints:\n\n\nCODE:\n\nTRUNCATE othertable CASCADE;\n\n"
+    },
+    {
+      "title": "Compatibility",
+      "text": "The SQL:2008 standard includes aTRUNCATEcommand with the syntaxTRUNCATE TABLEtablename. The clausesCONTINUE IDENTITY/RESTART IDENTITYalso appear in that standard, but have slightly different though related meanings. Some of the concurrency behavior of this command is left implementation-defined by the standard, so the above notes should be considered and compared with other implementations if necessary.\n"
+    }
+  ]
+}

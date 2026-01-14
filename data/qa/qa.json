@@ -1,0 +1,22 @@
+[
+  {
+    "question": "What is the purpose of the WHERE clause in SELECT?",
+    "answer": "The WHERE clause filters rows returned by a SELECT statement based on specified conditions.",
+    "source_doc": "sql-select"
+  },
+  {
+    "question": "What does EXPLAIN ANALYZE provide?",
+    "answer": "EXPLAIN ANALYZE executes the query and shows actual execution time, row counts, and the query plan.",
+    "source_doc": "sql-explain"
+  },
+  {
+    "question": "What is the role of VACUUM in PostgreSQL?",
+    "answer": "VACUUM reclaims storage occupied by dead tuples and helps maintain database performance.",
+    "source_doc": "sql-vacuum"
+  },
+  {
+    "question": "How does INSERT ... RETURNING work?",
+    "answer": "The RETURNING clause returns values of columns from rows inserted by the INSERT statement.",
+    "source_doc": "sql-insert"
+  }
+]
