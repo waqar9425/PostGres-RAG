@@ -1,9 +1,9 @@
-from guards import is_potentially_relevant
+from retriever import retrieve_chunks
+from prompt import build_prompt
+from generate import generate_answer
+
 
 def answer_question(question, chat_history=None):
-    if not is_potentially_relevant(question):
-        return "This question is outside the scope of PostgreSQL documentation."
-
     retrieved = retrieve_chunks(question)
 
     if not retrieved:

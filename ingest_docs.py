@@ -4,59 +4,6 @@ import json
 import os
 from tqdm import tqdm
 
-# DOC_URLS = {
-#     # Core DML
-#     "sql-select": "https://www.postgresql.org/docs/16/sql-select.html",
-#     "sql-insert": "https://www.postgresql.org/docs/16/sql-insert.html",
-#     "sql-update": "https://www.postgresql.org/docs/16/sql-update.html",
-#     "sql-delete": "https://www.postgresql.org/docs/16/sql-delete.html",
-#     "sql-merge": "https://www.postgresql.org/docs/16/sql-merge.html",
-
-#     # DDL – Tables, Views, Indexes
-#     "sql-create-table": "https://www.postgresql.org/docs/16/sql-create-table.html",
-#     "sql-alter-table": "https://www.postgresql.org/docs/16/sql-alter-table.html",
-#     "sql-drop-table": "https://www.postgresql.org/docs/16/sql-drop-table.html",
-#     "sql-create-view": "https://www.postgresql.org/docs/16/sql-create-view.html",
-#     "sql-create-index": "https://www.postgresql.org/docs/16/sql-create-index.html",
-#     "sql-drop-index": "https://www.postgresql.org/docs/16/sql-drop-index.html",
-
-#     # Query Analysis & Maintenance
-#     "sql-explain": "https://www.postgresql.org/docs/16/sql-explain.html",
-#     "sql-analyze": "https://www.postgresql.org/docs/16/sql-analyze.html",
-#     "sql-vacuum": "https://www.postgresql.org/docs/16/sql-vacuum.html",
-
-#     # Transactions
-#     "sql-begin": "https://www.postgresql.org/docs/16/sql-begin.html",
-#     "sql-commit": "https://www.postgresql.org/docs/16/sql-commit.html",
-#     "sql-rollback": "https://www.postgresql.org/docs/16/sql-rollback.html",
-#     "sql-savepoint": "https://www.postgresql.org/docs/16/sql-savepoint.html",
-#     "sql-set-transaction": "https://www.postgresql.org/docs/16/sql-set-transaction.html",
-
-#     # Security & Access Control
-#     "sql-grant": "https://www.postgresql.org/docs/16/sql-grant.html",
-#     "sql-revoke": "https://www.postgresql.org/docs/16/sql-revoke.html",
-#     "sql-create-role": "https://www.postgresql.org/docs/16/sql-create-role.html",
-#     "sql-alter-role": "https://www.postgresql.org/docs/16/sql-alter-role.html",
-
-#     # Database Management
-#     "sql-create-database": "https://www.postgresql.org/docs/16/sql-create-database.html",
-#     "sql-drop-database": "https://www.postgresql.org/docs/16/sql-drop-database.html",
-
-#     # Utility Commands
-#     "sql-copy": "https://www.postgresql.org/docs/16/sql-copy.html",
-#     "sql-truncate": "https://www.postgresql.org/docs/16/sql-truncate.html",
-#     "sql-set": "https://www.postgresql.org/docs/16/sql-set.html",
-#     "sql-show": "https://www.postgresql.org/docs/16/sql-show.html",
-#     "sql-refresh-materialized-view": "https://www.postgresql.org/docs/16/sql-refresh-materialized-view.html",
-
-#     # Concepts & Internals
-#     "indexes": "https://www.postgresql.org/docs/16/indexes.html",
-#     "indexes-partial": "https://www.postgresql.org/docs/16/indexes-partial.html",
-#     "ddl-constraints": "https://www.postgresql.org/docs/16/ddl-constraints.html",
-#     "mvcc": "https://www.postgresql.org/docs/16/mvcc.html",
-#     "runtime-config": "https://www.postgresql.org/docs/16/runtime-config.html",
-# }
-
 DOC_URLS = {
     # Core DML
     "sql-select": "https://www.postgresql.org/docs/16/sql-select.html",

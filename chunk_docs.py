@@ -1,7 +1,9 @@
+
 import os
 import json
 from pathlib import Path
 from tqdm import tqdm
+import tiktoken
 
 RAW_DOCS_DIR = Path("data/raw_docs")
 OUTPUT_DIR = Path("data/chunks")
@@ -9,26 +11,29 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 CHUNK_SIZE_TOKENS = 500
 OVERLAP_TOKENS = 100
-CHARS_PER_TOKEN = 4  # safe approximation
+
+# GPT tokenizer (model-agnostic safe choice)
+tokenizer = tiktoken.get_encoding("cl100k_base")
 
 
 def chunk_text(text, chunk_size_tokens, overlap_tokens):
-    chunk_size_chars = chunk_size_tokens * CHARS_PER_TOKEN
-    overlap_chars = overlap_tokens * CHARS_PER_TOKEN
+    tokens = tokenizer.encode(text)
 
     chunks = []
     start = 0
-    text_length = len(text)
+    total_tokens = len(tokens)
 
-    while start < text_length:
-        end = start + chunk_size_chars
-        chunk = text[start:end]
-        chunks.append(chunk.strip())
+    while start < total_tokens:
+        end = start + chunk_size_tokens
+        chunk_tokens = tokens[start:end]
 
-        if end >= text_length:
+        chunk_text = tokenizer.decode(chunk_tokens)
+        chunks.append(chunk_text.strip())
+
+        if end >= total_tokens:
             break
 
-        start = end - overlap_chars
+        start = end - overlap_tokens
 
     return chunks
 

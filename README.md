@@ -148,3 +148,5 @@ Limitations:
     LLM hallucination possible if retrieval fails
 
     Designed for demonstration, not production-scale deployment
+
+    Retriver evaluation only considering source doc for now. This should be chunk at chunk level. So we check if chunk was from right document but we are checking withing that document whether the chunks we relevant. chunk level ground truth creation will take time hence going with source doc level evaluation for now.

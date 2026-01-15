@@ -6,17 +6,72 @@
   },
   {
     "question": "What does EXPLAIN ANALYZE provide?",
-    "answer": "EXPLAIN ANALYZE executes the query and shows actual execution time, row counts, and the query plan.",
+    "answer": "EXPLAIN ANALYZE executes the query and shows the actual execution plan along with execution time and row counts.",
     "source_doc": "sql-explain"
   },
   {
     "question": "What is the role of VACUUM in PostgreSQL?",
-    "answer": "VACUUM reclaims storage occupied by dead tuples and helps maintain database performance.",
+    "answer": "VACUUM reclaims storage occupied by dead tuples and updates visibility maps to maintain database performance.",
     "source_doc": "sql-vacuum"
   },
   {
     "question": "How does INSERT ... RETURNING work?",
     "answer": "The RETURNING clause returns values of columns from rows inserted by the INSERT statement.",
     "source_doc": "sql-insert"
+  },
+  {
+    "question": "What does the UPDATE statement do in PostgreSQL?",
+    "answer": "The UPDATE statement modifies existing rows in a table based on specified conditions.",
+    "source_doc": "sql-update"
+  },
+  {
+    "question": "What is the purpose of the DELETE statement?",
+    "answer": "DELETE removes rows from a table that satisfy the specified WHERE condition.",
+    "source_doc": "sql-delete"
+  },
+  {
+    "question": "What does the GROUP BY clause do?",
+    "answer": "GROUP BY groups rows that have the same values in specified columns, typically used with aggregate functions.",
+    "source_doc": "sql-select"
+  },
+  {
+    "question": "What is the function of the HAVING clause?",
+    "answer": "HAVING filters groups created by GROUP BY based on aggregate conditions.",
+    "source_doc": "sql-select"
+  },
+  {
+    "question": "What is a transaction in PostgreSQL?",
+    "answer": "A transaction is a sequence of SQL statements executed as a single logical unit of work.",
+    "source_doc": "sql-begin"
+  },
+  {
+    "question": "What does the COMMIT command do?",
+    "answer": "COMMIT makes all changes performed in the current transaction permanent.",
+    "source_doc": "sql-commit"
+  },
+  {
+    "question": "What does the ROLLBACK command do?",
+    "answer": "ROLLBACK aborts the current transaction and discards all changes made during it.",
+    "source_doc": "sql-rollback"
+  },
+  {
+    "question": "What is the purpose of CREATE INDEX?",
+    "answer": "CREATE INDEX builds an index on one or more columns to improve query performance.",
+    "source_doc": "sql-createindex"
+  },
+  {
+    "question": "What does DROP TABLE do?",
+    "answer": "DROP TABLE removes a table and all its data from the database.",
+    "source_doc": "sql-droptable"
+  },
+  {
+    "question": "What is the purpose of the ORDER BY clause?",
+    "answer": "ORDER BY sorts the result set of a query based on one or more columns.",
+    "source_doc": "sql-select"
+  },
+  {
+    "question": "What does TRUNCATE do in PostgreSQL?",
+    "answer": "TRUNCATE removes all rows from a table quickly without scanning individual rows.",
+    "source_doc": "sql-truncate"
   }
 ]
